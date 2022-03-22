@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+button,
+select {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+}
+
+button:disabled,
+select:disabled {
+    opacity: 0.5;
+}
+
+button {
+    padding: 5px 15px;
+}
+
+#game {
+    --diskNumber: 5;
+    width: calc(2.5 * 30 * var(--diskNumber) * 1px);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.peg {
+    width: 5px;
+    height: 120px;
+    background: brown;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.peg::after {
+    content: "";
+    width: calc(30 * var(--diskNumber) * 1px);
+    height: 5px;
+    background: brown;
+}
+
+.disk {
+    width: calc(var(--size) * 30px);
+    height: 10px;
+    background: blue;
+    margin-top: 3px;
+}
+
+menu {
+    margin-bottom: 100px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+menu > * {
+    margin: 5px 0px;
+}
