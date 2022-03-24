@@ -1,4 +1,8 @@
-* {
+/* global stuff */
+
+*,
+*::after,
+*::before {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -11,6 +15,12 @@ body {
     align-items: center;
     flex-direction: column;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* menu */
+
+menu {
+    margin-bottom: 50px;
 }
 
 button,
@@ -29,45 +39,60 @@ button {
     padding: 5px 15px;
 }
 
+/* game */
+
 #game {
-    --diskNumber: 5;
-    width: calc(2.5 * 30 * var(--diskNumber) * 1px);
+    width: 500px;
+    height: 165px;
     margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
+    position: relative;
 }
 
+/* pegs */
+
 .peg {
-    width: 5px;
-    height: 120px;
+    width: 150px;
+    height: 10px;
     background: brown;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
+    position: absolute;
+}
+
+.peg:nth-of-type(1) {
+    bottom: 0;
+    left: 0;
+}
+
+.peg:nth-of-type(2) {
+    bottom: 0;
+    left: 175px;
+}
+
+.peg:nth-of-type(3) {
+    bottom: 0;
+    left: 350px;
 }
 
 .peg::after {
     content: "";
-    width: calc(30 * var(--diskNumber) * 1px);
-    height: 5px;
+    position: absolute;
+    width: 5px;
+    height: 120px;
     background: brown;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
 }
+
+/* disks */
 
 .disk {
     width: calc(var(--size) * 30px);
     height: 10px;
     background: blue;
-    margin-top: 3px;
-}
-
-menu {
-    margin-bottom: 100px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-
-menu > * {
-    margin: 5px 0px;
+    transform: translateX(
+            calc(var(--x, 0) * 1px + 15 * (5 - var(--size)) * 1px)
+        )
+        translateY(calc(var(--y, 0) * 1px));
+    position: absolute;
+    transition: transform 250ms ease-out;
 }

@@ -17,19 +17,33 @@ function Hanoi(numberDisks, origin, helper, target) {
 let delay = 1000;
 let diskNumber = 5;
 
-function init(number) {
-    diskNumber = number;
+const state = {
+    A: [5, 4, 3, 2, 1],
+    B: [],
+    C: [],
+};
+
+const offset_x = {
+    A: 0,
+    B: 175,
+    C: 350,
+};
+
+function init() {
     $(".disk").remove();
-    $("#game").css("--diskNumber", number);
-    for (let i = 1; i <= number; i++) {
+    $("#game").css("--diskNumber", diskNumber);
+    for (let i = 1; i <= diskNumber; i++) {
         $("<div></div>")
             .addClass("disk")
+            .attr("id", i)
             .css("--size", i)
-            .appendTo(".A");
+            .css("--x", 0)
+            .css("--y", 11 * (i - 1) + 100)
+            .appendTo("#game");
     }
 }
 
-init(diskNumber);
+init();
 
 $("#diskInput").change(function () {
     init(parseInt($(this).val()));
@@ -40,14 +54,23 @@ $("#delayInput").change(function () {
 });
 
 $("#startBtn").click(async function () {
-    $(`.disk`).appendTo(".A");
     $("button, select").prop("disabled", true);
     const hanoiSequence = Hanoi(diskNumber, "A", "B", "C");
     for (let i = 0; i < hanoiSequence.length; i++) {
-        await sleep(delay);
         const [source, target] = hanoiSequence[i];
-        const disk = $(`.${source}`).children()[0];
-        $(disk).prependTo(`.${target}`);
+        await performMove(source, target);
     }
     $("button, select").prop("disabled", false);
 });
+
+async function performMove(source, target) {
+    const diskId = state[source].pop();
+    state[target].push(diskId);
+    const disk = $(`#${diskId}`);
+    disk.css("--y", 0);
+    await sleep(400);
+    disk.css("--x", offset_x[target]);
+    await sleep(400);
+    disk.css("--y", 11 * (diskNumber - state[target].length) + 100);
+    await sleep(400);
+}
