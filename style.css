@@ -37,6 +37,7 @@ select:disabled {
 
 button {
     padding: 5px 15px;
+    cursor: pointer;
 }
 
 /* game */
@@ -90,9 +91,9 @@ button {
     height: 10px;
     background: blue;
     transform: translateX(
-            calc(var(--x, 0) * 1px + 15 * (5 - var(--size)) * 1px)
+            calc(var(--x) * 175px + 15 * (5 - var(--size)) * 1px)
         )
-        translateY(calc(var(--y, 0) * 1px));
+        translateY(calc(165px - 10px - 11 * var(--y) * 1px));
     position: absolute;
-    transition: transform 250ms ease-out;
+    transition: transform ease-out;
 }
