@@ -15,7 +15,7 @@ function Hanoi(numberDisks, origin, helper, target) {
 }
 
 let diskNumber = 5;
-let speed = 250;
+let delay = 250;
 let state;
 let paused = false;
 let nextIndex;
@@ -25,6 +25,7 @@ function init() {
     nextIndex = 0;
     direction = 1;
     $("#numberInput").val(diskNumber);
+    $("#delayInput").val(delay);
     $(".disk").remove();
     $("#game").css("--disk-number", diskNumber);
     state = [[], [], []];
@@ -32,7 +33,10 @@ function init() {
         state[0].push(i);
         $("<div></div>")
             .addClass("disk")
-            .css("transition-duration", `${speed}ms`)
+            .css(
+                "transition-duration",
+                `${Math.round(delay / 4.5)}ms`
+            )
             .attr("id", i)
             .css("--size", i)
             .css("--x", 0)
@@ -73,13 +77,21 @@ async function performMove(source, target) {
     state[target].push(diskId);
     const disk = $(`#${diskId}`);
     disk.css("--y", 12);
-    await sleep(speed * 1.5);
+    await sleep(delay / 3);
     disk.css("--x", target);
-    await sleep(speed * 1.5);
+    await sleep(delay / 3);
     disk.css("--y", state[target].length);
-    await sleep(speed * 1.5);
+    await sleep(delay / 3);
 }
 
 $("#pauseBtn").click(() => {
     paused = true;
+});
+
+$("#delayInput").change(function () {
+    delay = parseInt($(this).val());
+    $(".disk").css(
+        "transition-duration",
+        `${Math.round(delay / 4.5)}ms`
+    );
 });
