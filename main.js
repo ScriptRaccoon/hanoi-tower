@@ -17,8 +17,13 @@ function Hanoi(numberDisks, origin, helper, target) {
 let diskNumber = 5;
 let speed = 250;
 let state;
+let paused = false;
+let nextIndex;
+let direction;
 
 function init() {
+    nextIndex = 0;
+    direction = 1;
     $("#numberInput").val(diskNumber);
     $(".disk").remove();
     $("#game").css("--disk-number", diskNumber);
@@ -44,14 +49,23 @@ $("#numberInput").change(function () {
 });
 
 $("#startBtn").click(async function () {
-    $("button, select").prop("disabled", true);
-    const sequence = state[0].length > 0 ? [0, 1, 2] : [2, 1, 0];
-    const hanoiSequence = Hanoi(diskNumber, ...sequence);
-    for (let i = 0; i < hanoiSequence.length; i++) {
+    paused = false;
+    $("#pauseBtn").prop("disabled", false);
+    $("#startBtn, #numberInput").prop("disabled", true);
+    const pegs = direction == 1 ? [0, 1, 2] : [2, 1, 0];
+    const hanoiSequence = Hanoi(diskNumber, ...pegs);
+    for (let i = nextIndex; i < hanoiSequence.length; i++) {
         const [source, target] = hanoiSequence[i];
         await performMove(source, target);
+        nextIndex = i + 1;
+        if (paused) break;
     }
-    $("button, select").prop("disabled", false);
+    $("#pauseBtn").prop("disabled", true);
+    $("#startBtn, #numberInput").prop("disabled", false);
+    if (nextIndex == hanoiSequence.length) {
+        direction *= -1;
+        nextIndex = 0;
+    }
 });
 
 async function performMove(source, target) {
@@ -65,3 +79,7 @@ async function performMove(source, target) {
     disk.css("--y", state[target].length);
     await sleep(speed * 1.5);
 }
+
+$("#pauseBtn").click(() => {
+    paused = true;
+});
