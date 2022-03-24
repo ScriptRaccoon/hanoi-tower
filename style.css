@@ -43,8 +43,16 @@ button {
 /* game */
 
 #game {
-    width: 500px;
-    height: 165px;
+    --game-height: 165px;
+    --peg-width: 150px;
+    --peg-height: 120px;
+    --peg-distance: 40px;
+    --peg-thickness: 5px;
+    --disk-scaler: calc(var(--peg-width) / 5);
+    --disk-height: 10px;
+    --disk-margin: 1px;
+    width: calc(3 * var(--peg-width) + 2 * var(--peg-distance));
+    height: var(--game-height);
     margin: 0 auto;
     position: relative;
 }
@@ -52,8 +60,8 @@ button {
 /* pegs */
 
 .peg {
-    width: 150px;
-    height: 10px;
+    width: var(--peg-width);
+    height: var(--peg-thickness);
     background: brown;
     position: absolute;
 }
@@ -65,19 +73,19 @@ button {
 
 .peg:nth-of-type(2) {
     bottom: 0;
-    left: 175px;
+    left: calc(var(--peg-width) + var(--peg-distance));
 }
 
 .peg:nth-of-type(3) {
     bottom: 0;
-    left: 350px;
+    right: 0;
 }
 
 .peg::after {
     content: "";
     position: absolute;
-    width: 5px;
-    height: 120px;
+    width: var(--peg-thickness);
+    height: var(--peg-height);
     background: brown;
     bottom: 0;
     left: 50%;
@@ -87,13 +95,21 @@ button {
 /* disks */
 
 .disk {
-    width: calc(var(--size) * 30px);
-    height: 10px;
+    width: calc(var(--size) * var(--disk-scaler));
+    height: var(--disk-height);
     background: blue;
     transform: translateX(
-            calc(var(--x) * 175px + 15 * (5 - var(--size)) * 1px)
+            calc(
+                var(--x) * (var(--peg-width) + var(--peg-distance)) +
+                    0.5 * (5 - var(--size)) * var(--disk-scaler)
+            )
         )
-        translateY(calc(165px - 10px - 11 * var(--y) * 1px));
+        translateY(
+            calc(
+                var(--game-height) - var(--peg-thickness) - var(--y) *
+                    (var(--disk-height) + var(--disk-margin))
+            )
+        );
     position: absolute;
     transition: transform ease-out;
 }
