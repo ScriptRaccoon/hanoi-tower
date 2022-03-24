@@ -16,12 +16,11 @@ function Hanoi(numberDisks, origin, helper, target) {
 
 let diskNumber = 5;
 let speed = 250;
-
-const state = [[], [], []];
+let state;
 
 function init() {
     $(".disk").remove();
-    $("#game").css("--diskNumber", diskNumber);
+    state = [[], [], []];
     for (let i = diskNumber; i >= 1; i--) {
         state[0].push(i);
         $("<div></div>")
@@ -39,7 +38,8 @@ init();
 
 $("#startBtn").click(async function () {
     $("button, select").prop("disabled", true);
-    const hanoiSequence = Hanoi(diskNumber, 0, 1, 2);
+    const sequence = state[0].length > 0 ? [0, 1, 2] : [2, 1, 0];
+    const hanoiSequence = Hanoi(diskNumber, ...sequence);
     for (let i = 0; i < hanoiSequence.length; i++) {
         const [source, target] = hanoiSequence[i];
         await performMove(source, target);
