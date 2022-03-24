@@ -19,7 +19,9 @@ let speed = 250;
 let state;
 
 function init() {
+    $("#numberInput").val(diskNumber);
     $(".disk").remove();
+    $("#game").css("--disk-number", diskNumber);
     state = [[], [], []];
     for (let i = diskNumber; i >= 1; i--) {
         state[0].push(i);
@@ -35,6 +37,11 @@ function init() {
 }
 
 init();
+
+$("#numberInput").change(function () {
+    diskNumber = parseInt($(this).val());
+    init();
+});
 
 $("#startBtn").click(async function () {
     $("button, select").prop("disabled", true);

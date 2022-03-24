@@ -21,6 +21,11 @@ body {
 
 menu {
     margin-bottom: 50px;
+    text-align: center;
+}
+
+menu > div {
+    margin: 10px 0px;
 }
 
 button,
@@ -43,12 +48,13 @@ button {
 /* game */
 
 #game {
+    --disk-number: 5;
     --game-height: 165px;
     --peg-width: 150px;
     --peg-height: 120px;
     --peg-distance: 40px;
     --peg-thickness: 5px;
-    --disk-scaler: calc(var(--peg-width) / 5);
+    --disk-scaler: calc(var(--peg-width) / var(--disk-number));
     --disk-height: 10px;
     --disk-margin: 1px;
     width: calc(3 * var(--peg-width) + 2 * var(--peg-distance));
@@ -101,7 +107,8 @@ button {
     transform: translateX(
             calc(
                 var(--x) * (var(--peg-width) + var(--peg-distance)) +
-                    0.5 * (5 - var(--size)) * var(--disk-scaler)
+                    0.5 * (var(--disk-number) - var(--size)) *
+                    var(--disk-scaler)
             )
         )
         translateY(
