@@ -108,7 +108,7 @@ a:focus {
 
 #game {
     --disk-number: 5;
-    --game-width: 500px;
+    --game-width: min(500px, 60vw);
     --game-height: 320px;
     --board-height: 22px;
     --peg-height: 270px;
@@ -188,4 +188,11 @@ a:focus {
         );
     position: absolute;
     transition: transform cubic-bezier(0.31, 0.17, 0.4, 0.97);
+}
+
+@media (max-width: 500px) {
+    menu {
+        flex-direction: column;
+        gap: 10px;
+    }
 }
