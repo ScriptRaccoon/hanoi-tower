@@ -24,7 +24,7 @@ body {
 /* header */
 
 header {
-    padding: 30px 0px;
+    padding: 30px 10px;
 }
 
 h1 {
@@ -95,7 +95,12 @@ select:focus {
     width: 150px;
 }
 
+/* link */
+
 a {
+    position: absolute;
+    top: 15px;
+    right: 15px;
     color: #666;
 }
 
@@ -194,5 +199,9 @@ a:focus {
     menu {
         flex-direction: column;
         gap: 10px;
+    }
+    a {
+        top: 5px;
+        right: 5px;
     }
 }
