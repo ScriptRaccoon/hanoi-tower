@@ -108,25 +108,26 @@ a:focus {
 
 #game {
     --disk-number: 5;
+    --game-width: 500px;
     --game-height: 320px;
     --board-height: 22px;
-    --peg-width: 200px;
     --peg-height: 270px;
-    --peg-distance: 50px;
     --peg-thickness: 8px;
-    --disk-scaler: calc(var(--peg-width) / var(--disk-number));
+    --disk-scaler: calc(0.5 * var(--game-width) / var(--disk-number));
     --disk-height: 26px;
-    width: calc(3 * var(--peg-width) + 2 * var(--peg-distance));
+    width: var(--game-width);
     height: var(--game-height);
     margin: 0 auto;
     position: relative;
 }
 
+/* board */
+
 #game::after {
     content: "";
     position: absolute;
-    width: 106%;
-    transform: translateX(-3%);
+    width: 160%;
+    transform: translateX(calc(-0.3 * var(--game-width)));
     height: var(--board-height);
     top: var(--game-height);
     background: var(--brown-color);
@@ -144,29 +145,23 @@ a:focus {
         var(--lightbrown-color),
         var(--darkbrown-color)
     );
-    border-top-left-radius: var(--peg-thickness);
-    border-top-right-radius: var(--peg-thickness);
+    border-top-left-radius: 100vw;
+    border-top-right-radius: 100vw;
     position: absolute;
     bottom: 0;
     transform: translateX(-50%);
 }
 
 .peg:nth-of-type(1) {
-    left: calc(0.5 * var(--peg-width));
+    left: 0;
 }
 
 .peg:nth-of-type(2) {
-    left: calc(
-        var(--peg-width) + var(--peg-distance) + 0.5 *
-            var(--peg-width)
-    );
+    left: calc(0.5 * var(--game-width));
 }
 
 .peg:nth-of-type(3) {
-    left: calc(
-        2 * var(--peg-width) + 2 * var(--peg-distance) + 0.5 *
-            var(--peg-width)
-    );
+    left: var(--game-width);
 }
 
 /* disks */
@@ -182,13 +177,14 @@ a:focus {
     border-radius: 10px;
     transform: translateX(
             calc(
-                var(--x) * (var(--peg-width) + var(--peg-distance)) +
-                    0.5 * (var(--disk-number) - var(--size)) *
+                var(--x) * 0.5 * var(--game-width) - 0.25 *
+                    var(--game-width) + 0.5 *
+                    (var(--disk-number) - var(--size)) *
                     var(--disk-scaler)
             )
         )
         translateY(
-            calc(var(--game-height) - var(--y) * (var(--disk-height)))
+            calc(var(--game-height) - var(--y) * var(--disk-height))
         );
     position: absolute;
     transition: transform cubic-bezier(0.31, 0.17, 0.4, 0.97);
