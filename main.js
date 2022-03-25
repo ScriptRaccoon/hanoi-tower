@@ -15,7 +15,7 @@ function Hanoi(numberDisks, origin, helper, target) {
 }
 
 let diskNumber = 5;
-let delay = 250;
+let delay = 2000;
 let state;
 let paused = false;
 let nextIndex;

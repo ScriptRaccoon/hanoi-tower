@@ -20,7 +20,6 @@ body {
 /* menu */
 
 menu {
-    margin-bottom: 50px;
     text-align: center;
 }
 
@@ -49,53 +48,66 @@ button {
 
 #game {
     --disk-number: 5;
-    --game-height: 165px;
-    --peg-width: 150px;
-    --peg-height: 120px;
-    --peg-distance: 40px;
-    --peg-thickness: 5px;
+    --game-height: 320px;
+    --board-height: 22px;
+    --peg-width: 200px;
+    --peg-height: 270px;
+    --peg-distance: 50px;
+    --peg-thickness: 8px;
     --disk-scaler: calc(var(--peg-width) / var(--disk-number));
-    --disk-height: 10px;
-    --disk-margin: 1px;
+    --disk-height: 26px;
     width: calc(3 * var(--peg-width) + 2 * var(--peg-distance));
     height: var(--game-height);
     margin: 0 auto;
     position: relative;
+    margin-top: 30px;
+}
+
+#game::after {
+    content: "";
+    position: absolute;
+    width: 106%;
+    transform: translateX(-3%);
+    height: var(--board-height);
+    top: var(--game-height);
+    background: hsl(19, 64%, 45%);
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px #000c inset;
 }
 
 /* pegs */
 
 .peg {
-    width: var(--peg-width);
-    height: var(--peg-thickness);
-    background: brown;
+    width: var(--peg-thickness);
+    height: var(--peg-height);
+    background: linear-gradient(
+        90deg,
+        hsl(19, 64%, 60%),
+        hsl(19, 64%, 30%)
+    );
+    border-top-left-radius: var(--peg-thickness);
+    border-top-right-radius: var(--peg-thickness);
     position: absolute;
+    bottom: 0;
+    transform: translateX(-50%);
 }
 
 .peg:nth-of-type(1) {
-    bottom: 0;
-    left: 0;
+    left: calc(0.5 * var(--peg-width));
 }
 
 .peg:nth-of-type(2) {
-    bottom: 0;
-    left: calc(var(--peg-width) + var(--peg-distance));
+    left: calc(
+        var(--peg-width) + var(--peg-distance) + 0.5 *
+            var(--peg-width)
+    );
 }
 
 .peg:nth-of-type(3) {
-    bottom: 0;
-    right: 0;
-}
-
-.peg::after {
-    content: "";
-    position: absolute;
-    width: var(--peg-thickness);
-    height: var(--peg-height);
-    background: brown;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    left: calc(
+        2 * var(--peg-width) + 2 * var(--peg-distance) + 0.5 *
+            var(--peg-width)
+    );
 }
 
 /* disks */
@@ -103,7 +115,12 @@ button {
 .disk {
     width: calc(var(--size) * var(--disk-scaler));
     height: var(--disk-height);
-    background: blue;
+    background-image: linear-gradient(
+        hsl(197, 64%, 45%),
+        hsl(197, 64%, 32%)
+    );
+    box-shadow: 0px 0px 5px #0007 inset, 0px 4px 4px #fff6 inset;
+    border-radius: 10px;
     transform: translateX(
             calc(
                 var(--x) * (var(--peg-width) + var(--peg-distance)) +
@@ -112,11 +129,8 @@ button {
             )
         )
         translateY(
-            calc(
-                var(--game-height) - var(--peg-thickness) - var(--y) *
-                    (var(--disk-height) + var(--disk-margin))
-            )
+            calc(var(--game-height) - var(--y) * (var(--disk-height)))
         );
     position: absolute;
-    transition: transform ease-out;
+    transition: transform cubic-bezier(0.15, 0.43, 0.41, 1.01);
 }
