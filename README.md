@@ -2,4 +2,4 @@
 
 Visualization of the Tower of Hanoi with JavaScript and CSS.
 
-Demo: https://hanoi-tower-visual.netlify.app/
+Demo: https://tower-hanoi.netlify.app
