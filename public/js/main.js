@@ -1,25 +1,27 @@
-async function sleep(time) {
-    return new Promise((res) => setTimeout(res, time));
-}
+// sequence of moves for tower of hanoi
 
-function Hanoi(numberDisks, origin, helper, target) {
-    if (numberDisks == 1) {
-        return [[origin, target]];
+function hanoiSequence(numberDisks, origin, helper, target) {
+    if (numberDisks == 0) {
+        return [];
     } else {
         return [
-            ...Hanoi(numberDisks - 1, origin, target, helper),
-            ...Hanoi(1, origin, helper, target),
-            ...Hanoi(numberDisks - 1, helper, origin, target),
+            ...hanoiSequence(numberDisks - 1, origin, target, helper),
+            [origin, target],
+            ...hanoiSequence(numberDisks - 1, helper, origin, target),
         ];
     }
 }
 
+// variables
+
 let diskNumber = 5;
 let delay = 2000;
-let state;
-let paused = false;
+let paused = true;
+let pegs;
 let nextIndex;
-let direction;
+let pegOrder = [0, 1, 2];
+
+// init function
 
 function init() {
     nextIndex = 0;
@@ -28,9 +30,9 @@ function init() {
     $("#delayInput").val(delay);
     $(".disk").remove();
     $("#game").css("--disk-number", diskNumber);
-    state = [[], [], []];
+    pegs = [[], [], []];
     for (let i = diskNumber; i >= 1; i--) {
-        state[0].push(i);
+        pegs[0].push(i);
         $("<div></div>")
             .addClass("disk")
             .css(
@@ -47,46 +49,53 @@ function init() {
 
 init();
 
-$("#numberInput").change(function () {
-    diskNumber = parseInt($(this).val());
-    init();
-});
+// start animation
 
 $("#startBtn").click(async function () {
     paused = false;
     $("#pauseBtn").prop("disabled", false);
     $("#startBtn, #numberInput").prop("disabled", true);
-    const pegs = direction == 1 ? [0, 1, 2] : [2, 1, 0];
-    const hanoiSequence = Hanoi(diskNumber, ...pegs);
-    for (let i = nextIndex; i < hanoiSequence.length; i++) {
-        const [source, target] = hanoiSequence[i];
+    const sequence = hanoiSequence(diskNumber, ...pegOrder);
+    for (let i = nextIndex; i < sequence.length; i++) {
+        const [source, target] = sequence[i];
         await performMove(source, target);
         nextIndex = i + 1;
         if (paused) break;
     }
     $("#pauseBtn").prop("disabled", true);
     $("#startBtn, #numberInput").prop("disabled", false);
-    if (nextIndex == hanoiSequence.length) {
-        direction *= -1;
+    if (nextIndex == sequence.length) {
         nextIndex = 0;
+        pegOrder = pegOrder.reverse();
     }
 });
 
+// perform single move
+
 async function performMove(source, target) {
-    const diskId = state[source].pop();
-    state[target].push(diskId);
+    const diskId = pegs[source].pop();
+    pegs[target].push(diskId);
     const disk = $(`#${diskId}`);
     disk.css("--y", 12);
     await sleep(delay / 3);
     disk.css("--x", target);
     await sleep(delay / 3);
-    disk.css("--y", state[target].length);
+    disk.css("--y", pegs[target].length);
     await sleep(delay / 3);
 }
 
-$("#pauseBtn").click(() => {
-    paused = true;
+// pause function
+
+$("#pauseBtn").click(() => (paused = true));
+
+// change disk number
+
+$("#numberInput").change(function () {
+    diskNumber = parseInt($(this).val());
+    init();
 });
+
+// change delay
 
 $("#delayInput").change(function () {
     delay = parseInt($(this).val());
@@ -95,3 +104,9 @@ $("#delayInput").change(function () {
         `${Math.round(delay / 4.5)}ms`
     );
 });
+
+// utility sleep function
+
+async function sleep(time) {
+    return new Promise((res) => setTimeout(res, time));
+}

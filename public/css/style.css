@@ -95,7 +95,7 @@ select:focus {
     width: 150px;
 }
 
-/* link */
+/* info link */
 
 a {
     position: absolute;
@@ -194,6 +194,8 @@ a:focus {
     position: absolute;
     transition: transform cubic-bezier(0.31, 0.17, 0.4, 0.97);
 }
+
+/* media queries */
 
 @media (max-width: 500px) {
     menu {
