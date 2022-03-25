@@ -96,7 +96,7 @@ select:focus {
 }
 
 a {
-    color: inherit;
+    color: #666;
 }
 
 a:hover,
