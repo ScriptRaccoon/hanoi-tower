@@ -3,6 +3,9 @@
 :root {
     --blue-color: hsl(197, 64%, 32%);
     --lightblue-color: hsl(197, 64%, 45%);
+    --brown-color: hsl(19, 64%, 45%);
+    --lightbrown-color: hsl(19, 64%, 60%);
+    --darkbrown-color: hsl(19, 64%, 30%);
 }
 
 *,
@@ -126,7 +129,7 @@ a:focus {
     transform: translateX(-3%);
     height: var(--board-height);
     top: var(--game-height);
-    background: hsl(19, 64%, 45%);
+    background: var(--brown-color);
     border-radius: 5px;
     box-shadow: 0px 0px 10px #000c inset;
 }
@@ -138,8 +141,8 @@ a:focus {
     height: var(--peg-height);
     background: linear-gradient(
         90deg,
-        hsl(19, 64%, 60%),
-        hsl(19, 64%, 30%)
+        var(--lightbrown-color),
+        var(--darkbrown-color)
     );
     border-top-left-radius: var(--peg-thickness);
     border-top-right-radius: var(--peg-thickness);
