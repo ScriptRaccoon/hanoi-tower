@@ -1,5 +1,10 @@
 /* global stuff */
 
+:root {
+    --blue-color: hsl(197, 64%, 32%);
+    --lightblue-color: hsl(197, 64%, 45%);
+}
+
 *,
 *::after,
 *::before {
@@ -14,17 +19,16 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* menu */
 
 menu {
-    text-align: center;
-}
-
-menu > div {
-    margin: 10px 0px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    font-size: 18px;
 }
 
 button,
@@ -44,9 +48,9 @@ select:disabled {
 }
 
 button {
-    padding: 4px 12px;
+    padding: 5px 14px;
     cursor: pointer;
-    background: hsl(197, 64%, 32%);
+    background: var(--blue-color);
     color: white;
     border-radius: 5px;
     transition: opacity 150ms linear;
@@ -57,8 +61,24 @@ button:focus {
     filter: brightness(1.2);
 }
 
+select {
+    text-align: right;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+select:hover,
 select:focus {
-    outline: 1px solid gray;
+    border-color: var(--blue-color);
+}
+
+#numberInput {
+    width: 100px;
+}
+
+#delayInput {
+    width: 150px;
 }
 
 /* game */
@@ -133,8 +153,8 @@ select:focus {
     width: calc(var(--size) * var(--disk-scaler));
     height: var(--disk-height);
     background-image: linear-gradient(
-        hsl(197, 64%, 45%),
-        hsl(197, 64%, 32%)
+        var(--lightblue-color),
+        var(--blue-color)
     );
     box-shadow: 0px 0px 5px #0007 inset, 0px 4px 4px #fff6 inset;
     border-radius: 10px;
