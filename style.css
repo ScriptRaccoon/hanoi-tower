@@ -92,6 +92,15 @@ select:focus {
     width: 150px;
 }
 
+a {
+    color: inherit;
+}
+
+a:hover,
+a:focus {
+    color: var(--blue-color);
+}
+
 /* game */
 
 #game {
