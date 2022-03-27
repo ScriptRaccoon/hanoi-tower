@@ -87,14 +87,6 @@ select:focus {
     border-color: var(--blue-color);
 }
 
-#numberInput {
-    width: 100px;
-}
-
-#delayInput {
-    width: 150px;
-}
-
 /* info link */
 
 a {
@@ -182,9 +174,7 @@ a:focus {
     border-radius: 10px;
     transform: translateX(
             calc(
-                var(--x) * 0.5 * var(--game-width) - 0.25 *
-                    var(--game-width) + 0.5 *
-                    (var(--disk-number) - var(--size)) *
+                var(--x) * 0.5 * var(--game-width) - 0.5 * var(--size) *
                     var(--disk-scaler)
             )
         )

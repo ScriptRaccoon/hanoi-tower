@@ -16,7 +16,7 @@ function hanoiSequence(numberDisks, origin, helper, target) {
 
 let diskNumber = 5;
 let delay = 2000;
-let paused = true;
+let paused;
 let pegs;
 let nextIndex;
 let pegOrder = [0, 1, 2];
@@ -25,12 +25,12 @@ let pegOrder = [0, 1, 2];
 
 function init() {
     nextIndex = 0;
-    direction = 1;
+    pegs = [[], [], []];
+    paused = false;
     $("#numberInput").val(diskNumber);
     $("#delayInput").val(delay);
     $(".disk").remove();
     $("#game").css("--disk-number", diskNumber);
-    pegs = [[], [], []];
     for (let i = diskNumber; i >= 1; i--) {
         pegs[0].push(i);
         $("<div></div>")
