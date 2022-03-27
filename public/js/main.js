@@ -19,7 +19,7 @@ let delay = 2000;
 let paused;
 let pegs;
 let nextIndex;
-let pegOrder = [0, 1, 2];
+let pegOrder;
 
 // init function
 
@@ -27,6 +27,7 @@ function init() {
     nextIndex = 0;
     pegs = [[], [], []];
     paused = false;
+    pegOrder = [0, 1, 2];
     $("#numberInput").val(diskNumber);
     $("#delayInput").val(delay);
     $(".disk").remove();
